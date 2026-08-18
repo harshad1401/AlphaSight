@@ -8,9 +8,9 @@ import datetime
 import CAPM_Functions
 
 st.set_page_config(
-    page_title = "Beta", 
-    page_icon = "chart_with_upwards_trend", 
-    layout = 'wide'
+    page_title="Beta",
+    page_icon="chart_with_upwards_trend",
+    layout='wide'
 )
 
 st.title("Calculate Beta and Return for Individual Stock")
@@ -18,30 +18,32 @@ st.title("Calculate Beta and Return for Individual Stock")
 # Getting Input from User -
 col1, col2 = st.columns([1, 1])
 with col1:
-    stock = st.selectbox("Choose a Stocks", ['TSLA', 'AAPL', 'NFLX', 'MGM', 'AMZN', 'NVDA', 'GOOGL'])
+    stock = st.selectbox("Choose a Stocks", ['TSLA', 'AAPL', 'NFLX', 'MGM', 'AMZN', 'NVDA', 'GOOGL', 'META',
+                         'MSFT', 'LLY', 'AMD', 'V', 'XOM', 'JNJ', 'MU', 'CSCO', 'BAC', 'INTC', 'ORCL', 'DELL', 'GS', 'JCI'])
 with col2:
     year = st.number_input("Number of years: ", 1, 10)
-    
+
 # Downloading Data for SP500 -
 end = datetime.date.today()
-start = datetime.date(datetime.date.today().year-year, datetime.date.today().month, datetime.date.today().day)
+start = datetime.date(datetime.date.today().year-year,
+                      datetime.date.today().month, datetime.date.today().day)
 SP500 = web.DataReader(['sp500'], 'fred', start, end)
 
 stocks_df = pd.DataFrame()
 
-data = yf.download(stock, period = f'{year}y')
+data = yf.download(stock, period=f'{year}y')
 stocks_df[f'{stock}'] = data['Close']
 
-stocks_df.reset_index(inplace = True)
-SP500.reset_index(inplace = True)
+stocks_df.reset_index(inplace=True)
+SP500.reset_index(inplace=True)
 SP500.columns = ['Date', 'sp500']
 
 stocks_df['Date'] = stocks_df['Date'].astype('datetime64[ns]')
-stocks_df['Date'] = stocks_df['Date'].apply(lambda x:str(x)[:10])
+stocks_df['Date'] = stocks_df['Date'].apply(lambda x: str(x)[:10])
 stocks_df['Date'] = pd.to_datetime(stocks_df['Date'])
-stocks_df = pd.merge(stocks_df, SP500, on = 'Date', how = 'inner')
+stocks_df = pd.merge(stocks_df, SP500, on='Date', how='inner')
 print(stocks_df)
-    
+
 # Calculate Daily Returns -
 stocks_df['Return'] = stocks_df[stock].pct_change()
 SP500['Return'] = SP500['sp500'].pct_change()
@@ -61,9 +63,6 @@ market_variance = df['Market_Return'].var()
 
 # Calculate Beta -
 beta = covariance / market_variance
-
-# print("Stock Beta =", round(beta, 4))
-# beta = covariance / market_variance
 
 st.write("### Beta : ", round(beta, 4))
 
