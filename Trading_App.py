@@ -158,7 +158,7 @@ div.stButton > button:hover {
 # HEADER -
 st.markdown("""
 <div class="tradevision-header">
-<h1>◈ TradeVision</h1>
+<h1>⟐ TradeVision</h1>
 <h2>Smart Investment Planning & Risk Assessment Platform</h2>
 <p>See the Market. Know the Risk.</p>
 </div>
