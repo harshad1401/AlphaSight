@@ -6,9 +6,9 @@ from pages.utils.plotly_figure import plotly_table, Moving_average_forecast
 import plotly.graph_objects as go
 
 st.set_page_config(
-    page_title = "Stock Prediction",
-    page_icon = "chart_with_upwards_trend",
-    layout = "wide"
+    page_title="Stock Prediction",
+    page_icon="chart_with_upwards_trend",
+    layout="wide"
 )
 
 st.title("Stock Prediction")
@@ -16,17 +16,18 @@ st.title("Stock Prediction")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    ticker = st.text_input('Stock Ticker', 'AAPL').upper().strip()
+    ticker = st.selectbox("Choose a Stock: ", ['TSLA', 'AAPL', 'NFLX', 'MGM', 'AMZN', 'NVDA', 'GOOGL', 'META',
+                          'MSFT', 'LLY', 'AMD', 'V', 'XOM', 'JNJ', 'MU', 'CSCO', 'BAC', 'INTC', 'ORCL', 'DELL', 'GS', 'JCI'])
 
 rmse = 0
 
 st.subheader("Predicting Next 30 Days Close Price for: " + ticker)
 
 try:
-    
+
     # Get Stock Data -
     close_price = get_data(ticker)
-    
+
     # Calculating Rolling Mean -
     rolling_price = get_rolling_mean(close_price)
 
@@ -34,13 +35,13 @@ try:
     differencing_order = get_differencing_order(
         rolling_price
     )
-    
+
     # Scale Data -
     scaled_data, scaler = scaling(rolling_price)
-    
+
     # Evaluate ARIMA Model -
     rmse = evaluate_model(
-        scaled_data, 
+        scaled_data,
         differencing_order
     )
 
@@ -51,22 +52,22 @@ try:
 
     # Inverse Scaling -
     forecast['Close'] = inverse_scaling(
-        scaler, 
+        scaler,
         forecast['Close']
     )
-    
+
     st.write("##### Forecast Data (Next 30 Days)")
 
     # Forecast Table -
     fig_tail = plotly_table(
         forecast.sort_index(
-            ascending = True
+            ascending=True
         )
         .round(3)
     )
 
-    fig_tail.update_layout(height = 220)
-    st.plotly_chart(fig_tail, use_container_width = True)
+    fig_tail.update_layout(height=220)
+    st.plotly_chart(fig_tail, use_container_width=True)
 
     # STOCK PRICE FORECAST CHART -
 
@@ -94,7 +95,7 @@ try:
             y=combined_data["Close"],
             mode="lines",
             name="Close Price",
-            line=dict(width=2)
+            line=dict(width=2, color='green')
         )
     )
 
@@ -105,7 +106,7 @@ try:
         yaxis_title="Close Price",
         height=600,
         hovermode="x unified",
-        template="plotly_white"
+        template="plotly_white",
     )
 
     # Display chart
