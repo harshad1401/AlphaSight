@@ -22,7 +22,7 @@ col1, col2, col3 = st.columns(3)
 today = datetime.date.today()
 
 with col1:
-    ticker = st.text_input("Stock Ticker", "TSLA").upper().strip()
+    ticker = st.selectbox("Choose a Stock: ", ['TSLA', 'AAPL', 'NFLX', 'MGM', 'AMZN', 'NVDA', 'GOOGL', 'META', 'MSFT', 'LLY', 'AMD', 'V', 'XOM', 'JNJ', 'MU', 'CSCO', 'BAC', 'INTC', 'ORCL', 'DELL', 'GS', 'JCI'])
 with col2:
     start_date = st.date_input("Choose Start Date", datetime.date(today.year -1, today.month, today.day))
 with col3:
@@ -46,7 +46,14 @@ with col1:
     st.plotly_chart(fig_df, use_container_width = True)
 with col2:
     df = pd.DataFrame(index = ['Quick Ratio', 'Revenue per Share', 'Profit Margins', 'Debt to Equity', 'Return on Equity'])
-    df[''] = [stock.info['quickRatio'], stock.info['revenuePerShare'], stock.info['profitMargins'], stock.info['debtToEquity'], stock.info['returnOnEquity']]
+    df[''] = [
+        stock.info.get('quickRatio', 0),
+        stock.info.get('revenuePerShare', 0),
+        stock.info.get('profitMargins', 0),
+        stock.info.get('debtToEquity', 0),
+        stock.info.get('returnOnEquity', 0)
+    ]
+    
     fig_df = plotly_table(df)
     st.plotly_chart(fig_df, use_container_width = True)
 
