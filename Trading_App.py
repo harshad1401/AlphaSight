@@ -266,7 +266,7 @@ It is designed to help users interpret complex market information efficiently an
 # FOOTER -
 st.markdown("""
 <div class="tradevision-footer">
-<h3>📈 TradeVision</h3>
+<h3>◈ TradeVision</h3>
 
 <p>Transforming Market Data into Actionable Investment Insights</p>
 
