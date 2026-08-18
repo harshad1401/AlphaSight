@@ -98,10 +98,10 @@ try:
         .sort_index(ascending=False)
         .round(3)
     )
-    
+
     if isinstance(last_10_df.columns, pd.MultiIndex):
         last_10_df.columns = last_10_df.columns.get_level_values(0)
-        
+
     fig_df = plotly_table(last_10_df)
 
     st.write("##### Historical Data (Last 10 Days)")
