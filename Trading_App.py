@@ -96,7 +96,7 @@ st.markdown("""
 
 div.stButton > button {
     border-radius: 6px;
-    background-color: #787B86;
+    background-color: #484A51;
     color: #F0F3FA;
     font-weight: 600;
     padding: 10px 20PX;
@@ -159,9 +159,9 @@ div.stButton > button:hover {
 # HEADER -
 st.markdown("""
 <div class="tradevision-header">
-<h1>◈ TradeVision</h1>
-<h2>Smart Investment Planning & Risk Assessment Platform</h2>
-<p>See the Market. Know the Risk.</p>
+<h1>AlphaSight</h1>
+<h2>Intelligent Stock Analytics & Investment Insights</h2>
+<p>Smart Investment Planning & Risk Assessment Platform</p>
 </div>
 """, unsafe_allow_html=True)
 
