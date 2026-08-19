@@ -96,7 +96,7 @@ st.markdown("""
 
 div.stButton > button {
     border-radius: 6px;
-    background-color: #484A51;
+    background-color: #393a40;
     color: #F0F3FA;
     font-weight: 600;
     padding: 10px 20PX;
