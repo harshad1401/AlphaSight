@@ -22,6 +22,18 @@ st.set_page_config(
     layout="wide"
 )
 
+# CUSTOM CSS -
+st.markdown("""
+<style>
+
+.stApp {
+    background-color: #131722;
+}
+
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+""", unsafe_allow_html=True)
+
 st.title("Stock Analysis")
 
 # Getting Input from User -
@@ -43,7 +55,18 @@ st.subheader(ticker)
 
 stock = yf.Ticker(ticker)
 
-st.write(stock.info['longBusinessSummary'])
+try:
+    info = stock.info
+    summary = info.get("longBusinessSummary")
+
+    if summary:
+        st.write(summary)
+    else:
+        st.info("Business summary is not available for this stock.")
+
+except Exception as e:
+    st.error(f"Unable to retrieve stock information: {e}")
+
 st.write("Sector : ", stock.info['sector'])
 st.write("Full-Time Employees : ", stock.info['fullTimeEmployees'])
 st.write("Website : ", stock.info['website'])
@@ -89,8 +112,8 @@ try:
 
     daily_change = close_data.iloc[-1] - close_data.iloc[-2]
 
-    col1.metric("Current Price", f"{close_data.iloc[-1]:.2f}")
-    col2.metric("Daily Change", f"{daily_change:.2f}")
+    col1.metric("Current Price", f"{close_data.iloc[-1]:.2f}$")
+    col2.metric("Daily Change", f"{daily_change:.2f}%")
 
     # ================== Historical Data (Last 10 Days) ===================
     last_10_df = (
