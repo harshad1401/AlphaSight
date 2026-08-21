@@ -13,6 +13,18 @@ st.set_page_config(
     layout='wide'
 )
 
+# CUSTOM CSS -
+st.markdown("""
+<style>
+
+.stApp {
+    background-color: #131722;
+}
+
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+""", unsafe_allow_html=True)
+
 st.title("Calculate Beta and Return for Individual Stock")
 
 # Getting Input from User -
@@ -64,12 +76,21 @@ market_variance = df['Market_Return'].var()
 # Calculate Beta -
 beta = covariance / market_variance
 
-st.write("### Beta : ", round(beta, 4))
-
 # EXPECTED RETURN USING CAPM -
 
 # Risk-Free Rate
-rf = 0.00
+# Get latest 10-Year US Treasury Yield
+treasury = web.DataReader(
+    "DGS10",
+    "fred",
+    start,
+    end
+)
+
+rf_percent = treasury["DGS10"].dropna().iloc[-1]
+
+# Convert percentage to decimal
+rf = rf_percent / 100
 
 # Annualized Market Return
 rm = df["Market_Return"].mean() * 252
@@ -80,5 +101,23 @@ expected_return = rf + beta * (rm - rf)
 # Convert decimal to percentage
 expected_return_percentage = expected_return * 100
 
-# Display Expected Return
-st.write("### Expected Return: ", f"{expected_return_percentage:.2f}%")
+# Display -
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        "Beta",
+        f"{beta:.2f}"
+    )
+    
+with col2:
+    st.metric(
+        "Market Return",
+        f"{rm * 100:.2f}%"
+    )
+
+with col3:
+    st.metric(
+        "Expected Return",
+        f"{expected_return_percentage:.2f}%"
+    )
