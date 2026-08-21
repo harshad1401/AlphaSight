@@ -11,6 +11,18 @@ st.set_page_config(
     layout="wide"
 )
 
+# CUSTOM CSS -
+st.markdown("""
+<style>
+
+.stApp {
+    background-color: #131722;
+}
+
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+""", unsafe_allow_html=True)
+
 st.title("Stock Prediction")
 
 col1, col2, col3 = st.columns(3)
