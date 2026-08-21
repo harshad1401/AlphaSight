@@ -3,7 +3,7 @@ import streamlit as st
 
 # PAGE CONFIGURATION -
 st.set_page_config(
-    page_title="TradeVision",
+    page_title="AlphaSight",
     page_icon="heavy_dollar_sign:",
     layout="wide"
 )
@@ -24,7 +24,7 @@ st.markdown("""
 
 /* ================= HEADER ================= */
 
-.tradevision-header {
+.alphasight-header {
     padding: 45px;
     border-radius: 12px;
     text-align: center;
@@ -35,7 +35,7 @@ st.markdown("""
     border: 1px solid #363A45;
 }
 
-.tradevision-header h1 {
+.alphasight-header h1 {
     font-size: 52px !important;
     font-weight: 700 !important;
     margin: 0 0 15px 0 !important;
@@ -43,14 +43,14 @@ st.markdown("""
     text-shadow: 6px 6px 8px rgba(0,0,0,0.5);
 }
 
-.tradevision-header h2 {
+.alphasight-header h2 {
     color: #D1D4DC !important;
     font-size: 24px !important;
     font-weight: 400 !important;
     margin: 0 0 15px 0 !important;
 }
 
-.tradevision-header p {
+.alphasight-header p {
     color: #787B86 !important;
     font-size: 18px !important;
     margin: 0 !important;
@@ -102,6 +102,7 @@ div.stButton > button {
     padding: 10px 20PX;
     text-decoration: none;
     display: inline-block;
+    border: none;
 }
 
 div.stButton > button:hover {
@@ -134,19 +135,19 @@ div.stButton > button:hover {
 
 /* ================= FOOTER ================= */
 
-.tradevision-footer {
+.alphasight-footer {
     margin-top: 60px;
     padding: 30px;
     text-align: center;
     border-top: 1px solid #dddddd;
 }
 
-.tradevision-footer h3 {
+.alphasight-footer h3 {
     color: #D1D4DC !important;
     font-size: 20px;
 }
 
-.tradevision-footer p {
+.alphasight-footer p {
     color: #787B86 !important;
     font-size: 14px;
     margin: 5px;
@@ -158,7 +159,7 @@ div.stButton > button:hover {
 
 # HEADER -
 st.markdown("""
-<div class="tradevision-header">
+<div class="alphasight-header">
 <h1>AlphaSight</h1>
 <h2>Intelligent Stock Analytics & Investment Insights</h2>
 <p>Smart Investment Planning & Risk Assessment Platform</p>
@@ -246,13 +247,13 @@ with col4:
     if st.button("Calculate Beta →", key="capm_beta"):
         st.switch_page("pages/Calculate_Beta.py")
 
-# ABOUT TRADEVISION -
+# ABOUT ALPHASIGHT -
 st.markdown("""
 <div class="about-section">
-<h2>💡 About TradeVision</h2>
+<h2>💡 About AlphaSight</h2>
 
 <p>
-TradeVision is an intelligent Stock Market Analysis and Prediction platform designed to help users make Data-Driven Investment Decisions.
+AlphaSight is an intelligent Stock Market Analysis and Prediction platform designed to help users make Data-Driven Investment Decisions.
 </p>
 
 <p>
@@ -265,8 +266,8 @@ It is designed to help users interpret complex market information efficiently an
 
 # FOOTER -
 st.markdown("""
-<div class="tradevision-footer">
-<h3>◈ TradeVision</h3>
+<div class="alphasight-footer">
+<h3>◈ AlphaSight</h3>
 
 <p>Transforming Market Data into Actionable Investment Insights</p>
 
@@ -274,7 +275,7 @@ st.markdown("""
 
 <p>Select Market Data Provided by <a href="https://finance.yahoo.com" style="color: #4d79ff; text-decoration: none;">YahooFinance</a>.</p>
 
-<p>© 2026 TradeVision | All Rights Reserved</p>
+<p>© 2026 alphasight | All Rights Reserved</p>
 
 <a href="https://www.instagram.com" target="_blank" class="fa fa-instagram" style="font-size: 24px; color: #707079FF; text-decoration: none; margin: 5px;"></a> |
 <a href="https://www.facebook.com" target="_blank" class="fa fa-facebook" style="font-size: 24px; color: #707079FF; text-decoration: none; margin: 5px;"></a> |
