@@ -12,6 +12,18 @@ st.set_page_config(
     layout='wide'
 )
 
+# CUSTOM CSS -
+st.markdown("""
+<style>
+
+.stApp {
+    background-color: #131722;
+}
+
+</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+""", unsafe_allow_html=True)
+
 st.title("Capital Asset Pricing Model")
 
 # Getting Input from User -
@@ -46,7 +58,7 @@ try:
     stocks_df['Date'] = stocks_df['Date'].apply(lambda x: str(x)[:10])
     stocks_df['Date'] = pd.to_datetime(stocks_df['Date'])
     stocks_df = pd.merge(stocks_df, SP500, on='Date', how='inner')
-    print(stocks_df)
+    # print(stocks_df)
 
     col1, col2 = st.columns([1, 1])
     with col1:
@@ -66,7 +78,7 @@ try:
             CAPM_Functions.normalize(stocks_df)))
 
     stocks_daily_return = CAPM_Functions.daily_returns(stocks_df)
-    print(stocks_daily_return.head)
+    # print(stocks_daily_return.head)
 
     beta = {}
     alpha = {}
@@ -87,14 +99,34 @@ try:
 
     st.markdown("### 💰 Calculated Return using CAPM")
 
-    # Risk-Free Rate
-    rf = 0.00
+    # Risk-free rate -
+    # Get latest 10-Year US Treasury Yield
+    treasury = web.DataReader(
+        "DGS10",
+        "fred",
+        start,
+        end
+    )
 
-    # Annualized Market Return
-    rm = stocks_daily_return["sp500"].mean() * 252
+    rf_percent = treasury["DGS10"].dropna().iloc[-1]
 
-    # CAPM INPUTS
+    # Convert percentage to decimal
+    rf = rf_percent / 100
 
+    # S&P 500 Daily Returns -
+    sp500_returns = stocks_daily_return["sp500"].dropna()
+
+    # Annualized Market Return -
+    sp500_returns = stocks_daily_return["sp500"].replace(
+        [float("inf"), float("-inf")],
+        pd.NA
+    ).dropna()
+    
+    rm = (1 + sp500_returns).prod() ** (
+        252 / len(sp500_returns)
+    ) - 1
+
+    # CAPM Inputs -
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -115,27 +147,25 @@ try:
             len(stocks_list)
         )
 
-    # CALCULATE EXPECTED RETURN -
-
+    # Calculate Expected Return -
     return_values = []
 
     for stock in stocks_list:
 
+        # Get beta for current stock -
         stock_beta = float(beta[stock])
 
-        # CAPM Formula
-        capm_return = rf + (
-            stock_beta * (rm - rf)
-        )
+        # CAPM Formula -
+        capm_return = rf + stock_beta * (rm - rf)
 
-        # Convert to percentage
+        # Convert decimal to percentage -
         capm_return_percentage = capm_return * 100
 
         return_values.append(
             round(capm_return_percentage, 2)
         )
 
-    # RETURN DATAFRAME -
+    # Create Result DataFrame -
 
     return_df = pd.DataFrame({
 
@@ -147,10 +177,9 @@ try:
         ],
 
         "Expected Return (%)": return_values
-
     })
 
-    # DISPLAY RESULT -
+    # Display Results -
 
     st.dataframe(
         return_df,
