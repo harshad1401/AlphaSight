@@ -39,11 +39,19 @@ st.title("Stock Analysis")
 # Getting Input from User -
 col1, col2, col3 = st.columns(3)
 
+# Import Dataset -
+sp500 = pd.read_csv("sp500_companies.csv")
+
+# Display Companies -
+# st.dataframe(sp500)
+
+# Get ticker list -
+tickers_list = sp500['Symbol'].to_list()
+
 today = datetime.date.today()
 
 with col1:
-    ticker = st.selectbox("Choose a Stock: ", ['TSLA', 'AAPL', 'NFLX', 'MGM', 'AMZN', 'NVDA', 'GOOGL', 'META',
-                          'MSFT', 'LLY', 'AMD', 'V', 'XOM', 'JNJ', 'MU', 'CSCO', 'BAC', 'INTC', 'ORCL', 'DELL', 'GS', 'JCI'])
+    ticker = st.selectbox("Choose a Stock: ", tickers_list)
 with col2:
     start_date = st.date_input("Choose Start Date", datetime.date(
         today.year - 1, today.month, today.day))
