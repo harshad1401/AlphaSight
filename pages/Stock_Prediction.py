@@ -27,9 +27,17 @@ st.title("Stock Prediction")
 
 col1, col2, col3 = st.columns(3)
 
+# Import Dataset -
+sp500 = pd.read_csv("sp500_companies.csv")
+
+# Display Companies -
+# st.dataframe(sp500)
+
+# Get ticker list -
+tickers_list = sp500['Symbol'].to_list()
+
 with col1:
-    ticker = st.selectbox("Choose a Stock: ", ['TSLA', 'AAPL', 'NFLX', 'MGM', 'AMZN', 'NVDA', 'GOOGL', 'META',
-                          'MSFT', 'LLY', 'AMD', 'V', 'XOM', 'JNJ', 'MU', 'CSCO', 'BAC', 'INTC', 'ORCL', 'DELL', 'GS', 'JCI'])
+    ticker = st.selectbox("Choose a Stock: ", tickers_list)
 
 rmse = 0
 
