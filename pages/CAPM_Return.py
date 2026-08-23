@@ -28,9 +28,18 @@ st.title("Capital Asset Pricing Model")
 
 # Getting Input from User -
 col1, col2 = st.columns([1, 1])
+
+# Import Dataset -
+sp500 = pd.read_csv("sp500_companies.csv")
+
+# Display Companies -
+# st.dataframe(sp500)
+
+# Get ticker list -
+tickers_list = sp500['Symbol'].to_list()
+
 with col1:
-    stocks_list = st.multiselect("Choose 4 Stocks", ('TSLA', 'AAPL', 'NFLX', 'MGM', 'AMZN', 'NVDA', 'GOOGL', 'META', 'MSFT', 'LLY', 'AMD', 'V', 'XOM', 'JNJ',
-                                 'MU', 'CSCO', 'BAC', 'INTC', 'ORCL', 'DELL', 'GS', 'JCI', 'AVGO', 'BRK.B', 'LLY', 'JPM', 'WMT', 'AMD', 'XOM'), {'TSLA', 'AAPL', 'AMZN', 'GOOGL'})
+    stocks_list = st.multiselect("Choose 4 Stocks", tickers_list, {'TSLA', 'AAPL', 'AMZN', 'GOOGL'})
 with col2:
     year = st.number_input("Number of years: ", 1, 10)
 
