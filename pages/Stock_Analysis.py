@@ -28,6 +28,7 @@ st.markdown("""
 
 .stApp {
     background-color: #131722;
+    color: white;
 }
 
 </style>
