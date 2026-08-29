@@ -13,19 +13,6 @@ st.set_page_config(
     layout='wide'
 )
 
-# CUSTOM CSS -
-st.markdown("""
-<style>
-
-.stApp {
-    background-color: #131722;
-    color: white;
-}
-
-</style>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-""", unsafe_allow_html=True)
-
 st.title("Calculate Beta and Return for Individual Stock")
 
 # Getting Input from User -
